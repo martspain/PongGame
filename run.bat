@@ -1,0 +1,1 @@
+configure.bat && generate.bat && MARTSPAIN_GEA.exe
