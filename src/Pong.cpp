@@ -3,7 +3,7 @@
 
 Pong::Pong(const char* name, int width, int height)
 : Game(name, width, height) {
-  bg_R = 255, bg_G = 255, bg_B = 255;
+  bg_R = 0, bg_G = 0, bg_B = 0;
   winMessage = "Game Over. No one won. :(";
 }
 
@@ -62,7 +62,7 @@ void Pong::setup() {
   paddleOne.w = 20;
   paddleOne.h = 100;
   
-  // Player One (right)
+  // Player Two (right)
   paddleTwo.x = screen_width - 20;
   paddleTwo.y = (screen_height / 2) - 50;
   paddleTwo.w = 20;

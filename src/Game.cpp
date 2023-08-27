@@ -17,7 +17,7 @@ Game::Game(const char* name, int width, int height)
     frameEndTimestamp = 0;
     frameCountPerSecond = 0;
     FPS = 0;
-    int maxFPS = 60;
+    int maxFPS = 120;
     frameDuration = (1.0f/maxFPS) * 1000.0f;
     frameCount = 0;
   } else {
