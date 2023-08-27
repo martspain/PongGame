@@ -1,10 +1,18 @@
 #include <iostream>
 #include "Pong.h"
 
+#include "ECS/Entity.h"
+#include "ECS/Components.h"
+
+#include "Scene/Scene.h"
+
 Pong::Pong(const char* name, int width, int height)
 : Game(name, width, height) {
   bg_R = 0, bg_G = 0, bg_B = 0;
   winMessage = "Game Over. No one won. :(";
+
+  Scene* scene = new Scene("Pong Scene");
+  scene->createEntity("Paddle 1");
 }
 
 Pong::~Pong() {

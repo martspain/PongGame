@@ -26,6 +26,9 @@ add_executable(
 
 target_include_directories(
   ${PROJECT_NAME}
+  PUBLIC ${PROJECT_SOURCE_DIR}/src
+  PUBLIC ${PROJECT_SOURCE_DIR}/src/Game
+  PUBLIC ${PROJECT_SOURCE_DIR}/src/Scene
   PRIVATE ${PROJECT_SOURCE_DIR}/include
 )
 
