@@ -33,9 +33,14 @@ Game::~Game() {
   SDL_Quit();
 }
 
-void Game::setup() {
-  print("Game Setup");
+void Game::setScene(Scene* newScene) {
+  currentScene = newScene;
+  currentScene->setup();
 }
+
+// void Game::setup() {
+//   print("Game Setup");
+// }
 
 void Game::frameStart() {
   print("# --- --- Frame", frameCount ,"--- --- #");
@@ -102,8 +107,6 @@ bool Game::running() {
 }
 
 void Game::run() {
-  setup();
-
   while (running()) {
     frameStart();
     handleEvents();

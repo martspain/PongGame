@@ -1,13 +1,14 @@
 #pragma once
 #include <print.h>
 #include <SDL2/SDL.h>
+#include "Scene/Scene.h"
 
 class Game {
   public:
     Game(const char* name, int width, int height);
     ~Game();
 
-    virtual void setup();
+    // virtual void setup();
     void frameStart();
     void frameEnd();
     virtual void handleEvents();
@@ -16,6 +17,8 @@ class Game {
     bool running();
 
     void run();
+
+    void setScene(Scene* newScene);
   
   protected:
     int width;
@@ -38,4 +41,6 @@ class Game {
 
     // Delta time
     float dT;
+
+    Scene* currentScene;
 };

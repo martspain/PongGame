@@ -1,18 +1,21 @@
 #include <iostream>
+
 #include "Pong.h"
+#include "Systems.h"
 
 #include "ECS/Entity.h"
-#include "ECS/Components.h"
+// #include "ECS/Components.h"
 
-#include "Scene/Scene.h"
+// Scene* currentScene;
 
 Pong::Pong(const char* name, int width, int height)
 : Game(name, width, height) {
-  bg_R = 0, bg_G = 0, bg_B = 0;
-  winMessage = "Game Over. No one won. :(";
+  // bg_R = 0, bg_G = 0, bg_B = 0;
+  // winMessage = "Game Over. No one won. :(";
 
-  Scene* scene = new Scene("Pong Scene");
-  scene->createEntity("Paddle 1");
+  // Scene* scene = new Scene("Pong Scene");
+  // scene->createEntity("Paddle 1");
+  currentScene = createGameplayScene();
 }
 
 Pong::~Pong() {
@@ -56,33 +59,43 @@ bool Pong::checkCollision(const SDL_Rect& rectA, const SDL_Rect& rectB) {
   }
 }
 
-void Pong::setup() {
-  print("pong setup");
+Scene* Pong::createGameplayScene() {
+  Scene* scene = new Scene("Gameplay Scene");
 
-  ball.x = 20;
-  ball.y = 20;
-  ball.w = 20;
-  ball.h = 20;
-  
-  // Player One (left)
-  paddleOne.x = 0;
-  paddleOne.y = (screen_height / 2) - 50;
-  paddleOne.w = 20;
-  paddleOne.h = 100;
-  
-  // Player Two (right)
-  paddleTwo.x = screen_width - 20;
-  paddleTwo.y = (screen_height / 2) - 50;
-  paddleTwo.w = 20;
-  paddleTwo.h = 100;
+  scene->addSetupSystem(new HelloWorldSystem());
 
-  // Ball speed
-  ballSpeedX = 1;
-  ballSpeedY = 1;
-
-  // Player Speed
-  playerSpeed = 15;
+  return scene;
 }
+
+// void Pong::setup() {
+//   print("pong setup");
+
+//   ball.x = 20;
+//   ball.y = 20;
+//   ball.w = 20;
+//   ball.h = 20;
+  
+//   // Player One (left)
+//   paddleOne.x = 0;
+//   paddleOne.y = (screen_height / 2) - 50;
+//   paddleOne.w = 20;
+//   paddleOne.h = 100;
+  
+//   // Player Two (right)
+//   paddleTwo.x = screen_width - 20;
+//   paddleTwo.y = (screen_height / 2) - 50;
+//   paddleTwo.w = 20;
+//   paddleTwo.h = 100;
+
+//   // Ball speed
+//   ballSpeedX = 1;
+//   ballSpeedY = 1;
+
+//   // Player Speed
+//   playerSpeed = 15;
+
+//   currentScene->setup();
+// }
 
 void Pong::update() {
   print("pong update");
