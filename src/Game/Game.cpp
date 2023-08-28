@@ -62,6 +62,7 @@ void Game::handleEvents() {
         isRunning = false;
         break;
     }
+    currentScene->processEvents(event);
   }
 }
 
@@ -91,6 +92,7 @@ void Game::frameEnd() {
 
 void Game::update() {
   print("Update");
+  currentScene->update(dT);
 }
 
 void Game::render() {
@@ -98,6 +100,8 @@ void Game::render() {
 
   SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
   SDL_RenderClear(renderer);
+
+  currentScene->render(renderer);
 
   SDL_RenderPresent(renderer);
 }
