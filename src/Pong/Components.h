@@ -5,7 +5,11 @@ struct SizeComponent {
   int h;
 };
 
-struct PlayerComponent {
+struct PlayerLeftComponent {
+  int moveSpeed;
+};
+
+struct PlayerRightComponent {
   int moveSpeed;
 };
 

@@ -22,17 +22,25 @@ Scene* Pong::createGameplayScene() {
   ball.addComponent<SpeedComponent>(200, 200);
   ball.addComponent<ColliderComponent>(false, 0);
 
-  Entity paddle = scene->createEntity("PLAYER 1", (screen_width/2) - 50, screen_height - 20);
-  paddle.addComponent<SizeComponent>(100, 20);
-  paddle.addComponent<SpeedComponent>(0, 0);
-  paddle.addComponent<PlayerComponent>(200);
+  // Player One (Left)
+  Entity paddleLeft = scene->createEntity("PLAYER 1", 0, (screen_height/2));
+  paddleLeft.addComponent<SizeComponent>(20, 100);
+  paddleLeft.addComponent<SpeedComponent>(0, 0);
+  paddleLeft.addComponent<PlayerLeftComponent>(400);
+  
+  // Player Two (Right)
+  Entity paddleRight = scene->createEntity("PLAYER 2", (screen_width-20), (screen_height/2));
+  paddleRight.addComponent<SizeComponent>(20, 100);
+  paddleRight.addComponent<SpeedComponent>(0, 0);
+  paddleRight.addComponent<PlayerRightComponent>(400);
 
 
   // scene->addSetupSystem(new HelloWorldSystem());
   scene->addRenderSystem(new RectRenderSystem());
   scene->addUpdateSystem(new BounceUpdateSystem());
   scene->addUpdateSystem(new MovementUpdateSystem(screen_width, screen_height));
-  scene->addEventSystem(new PlayerInputSystem());
+  scene->addEventSystem(new PlayerLeftInputSystem());
+  scene->addEventSystem(new PlayerRightInputSystem());
 
   scene->addUpdateSystem(new CollisionDetectionUpdateSystem());
 

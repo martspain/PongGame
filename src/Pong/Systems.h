@@ -63,16 +63,16 @@ class MovementUpdateSystem : public UpdateSystem {
         const int nx = t.position.x + s.x * dT;
         const int ny = t.position.y + s.y * dT;
 
-        if (nx <= 0) {
-          s.x *= -1.2;
+        if (nx < 0) { // Player Two Wins
+          exit(1);
         }
-        if (nx + sz.w >= screen_width) {
-          s.x *= -1.2;
+        if (ny + sz.h >= screen_height) {
+          s.y *= -1.2;
         }
         if (ny <= 0) {
           s.y *= -1.2;
         }
-        if (ny + sz.h > screen_height) {
+        if (nx + sz.w > screen_width) { // Player One Wins
           exit(1);
         }
 
@@ -86,23 +86,46 @@ class MovementUpdateSystem : public UpdateSystem {
 };
 
 
-class PlayerInputSystem : public EventSystem {
+class PlayerLeftInputSystem : public EventSystem {
   void run(SDL_Event event) {
-    scene->r.view<SpeedComponent, PlayerComponent>()
+    scene->r.view<SpeedComponent, PlayerLeftComponent>()
       .each(
         [&](const auto entity, auto& s, auto& p) {
           if (event.type == SDL_KEYDOWN) {
             switch(event.key.keysym.sym) {
-              case SDLK_RIGHT:
-                s.x = p.moveSpeed;
+              case SDLK_s:
+                s.y = p.moveSpeed;
                 break;
-              case SDLK_LEFT:
-                s.x = -p.moveSpeed;
+              case SDLK_w:
+                s.y = -p.moveSpeed;
                 break;
             }
           }
           if (event.type == SDL_KEYUP) {
-            s.x = 0;
+            s.y = 0;
+          }
+        }
+      );
+    }
+};
+
+class PlayerRightInputSystem : public EventSystem {
+  void run(SDL_Event event) {
+    scene->r.view<SpeedComponent, PlayerRightComponent>()
+      .each(
+        [&](const auto entity, auto& s, auto& p) {
+          if (event.type == SDL_KEYDOWN) {
+            switch(event.key.keysym.sym) {
+              case SDLK_DOWN:
+                s.y = p.moveSpeed;
+                break;
+              case SDLK_UP:
+                s.y = -p.moveSpeed;
+                break;
+            }
+          }
+          if (event.type == SDL_KEYUP) {
+            s.y = 0;
           }
         }
       );
@@ -148,7 +171,7 @@ class CollisionDetectionUpdateSystem : public UpdateSystem {
 
                   if (SDL_HasIntersection(&boxCol1, &boxCol2)) {
                     colliderComponent.triggered = true;
-                    colliderComponent.transferSpeed = speedComponent2.x;
+                    colliderComponent.transferSpeed = speedComponent2.y;
                   }
 
               }
@@ -168,8 +191,8 @@ class BounceUpdateSystem : public UpdateSystem {
             auto& colliderComponent
           ) {
             if (colliderComponent.triggered) {
-              speedComponent.y *= -1.5;
-              speedComponent.x += colliderComponent.transferSpeed;
+              speedComponent.x *= -1.5;
+              speedComponent.y += colliderComponent.transferSpeed;
 
               colliderComponent.triggered = false;
             }
